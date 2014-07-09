@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	
+	<bean id="adcoreWsService" class="com.sogou.bizdev.muse.adcorews.app.service.impl.AdcoreWsServiceImpl" >
+	   	<property name="adcoreRmiService">
+	   		<ref bean="adcoreRmiService"/>
+	   	</property>
+   </bean>
+   
+	<!-- 通过RmiProxyFactoryBean 访问远程服务-->
+	<bean id="adcoreRmiService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+           <!-- 指定远程服务的url，后的服务名应与服务器端的服务名相同-->
+             <property name="serviceUrl">
+                <value>rmi://10.129.148.65:1099/adcoreServiceRemote</value>
+           </property>
+            <!-- 指定远程服务的接口名-->
+             <property name="serviceInterface">
+                <value>com.sogou.bizdev.muse.adcore.app.service.AdcoreService</value>
+           </property>
+           <property name="refreshStubOnConnectFailure">
+        		<value>true</value>
+           </property>
+	</bean>	
+</beans>
